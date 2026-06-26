@@ -115,24 +115,11 @@ users.users.andey.shell = pkgs.zsh;
 
 # Кастом Программы
 
-programs.bash.shellAliases = {
-  conf = "sudo nano /etc/nixos/configuration.nix";
+nix.gc = {
+  automatic = true;
+  dates = "daily";
+  options = "--delete-older-than 30d";
 };
-
-  systemd.services.cache-clean30 = {
-    script = "nix-collect-garbage --delete-older-than 30d"; 
-    serviceConfig = { 
-      Type = "oneshot"; 
-    };
-   }; 
-  
-  systemd.timers.cache-clean30 = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "daily";
-      Persistent = true;
-    };
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
